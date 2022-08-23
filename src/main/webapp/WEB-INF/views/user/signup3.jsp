@@ -84,9 +84,8 @@ button {
 			<div class="col-4 offset-4">
 
 
-				<form:form modelAttribute="userVO">
+				<%-- <form:form modelAttribute="userVO">
 					<form:input path="username" type="email" value="${USER.username}" />
-					<%-- <form:errors path="username" value="${USER.username}"/> --%>
 					<button type="button" onclick="location.href = '${rootPath}/user/email_join';">
 						<div class="card-round-box">
 							<h6 class="text-center text-primary">
@@ -95,17 +94,17 @@ button {
 							</h6>
 						</div>
 					</button>
-				</form:form>
+				</form:form> --%>
 
 
-				<%-- <a href="${rootPath}/user/email_join">
+				<a href="${rootPath}/index">
 					<div class="card-round-box">
 						<h6 class="text-center text-primary">
 							<img src="${rootPath}/static/img/svg/icon-phone.svg" alt="" class="vam mb-2" />
 							<br />이메일 본인 인증
 						</h6>
 					</div>
-				</a> --%>
+				</a> 
 
 
 			</div>

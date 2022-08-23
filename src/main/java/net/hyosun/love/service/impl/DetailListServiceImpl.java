@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
+import lombok.extern.slf4j.Slf4j;
 import net.hyosun.love.config.QualifierConfig;
 import net.hyosun.love.model.CommonDetailVO;
 import net.hyosun.love.model.FoodVO;
@@ -21,6 +22,7 @@ import net.hyosun.love.model.LodgmentVO;
 import net.hyosun.love.model.TourListVO;
 import net.hyosun.love.service.DetailService;
 
+@Slf4j
 @Service
 public class DetailListServiceImpl implements DetailService{
 
@@ -41,7 +43,8 @@ public class DetailListServiceImpl implements DetailService{
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		
+
+		log.debug(url);
 		
 		//파일 읽어들이기
         URL realUrl = new URL(url);

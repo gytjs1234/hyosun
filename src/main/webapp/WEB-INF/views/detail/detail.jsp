@@ -19,6 +19,12 @@
 <link href="${rootPath}/static/css/bootstrap.css" rel="stylesheet">
 <link href="${rootPath}/static/css/style.css" rel="stylesheet">
 
+<style>
+img.weather_img {
+	width: 50px;
+}
+</style>
+
 <!-- Favicons -->
 <link rel="apple-touch-icon"
 	href="${rootPath}/static/brand/apple-touch-icon.png" sizes="180x180">
@@ -102,15 +108,62 @@
 	<div class="container nopadding">
 		<div class="mt-0 mb-0">
 			<div class="row no-gutters align-items-center">
+
 				<div class="col-6">
-					<img src="${rootPath}/static/img/svg/weather_clouds_rain.svg"
-						alt="" class="icon-md mr-2 align-middle" /> <strong>24°</strong><small
-						class="text-grey ml-1 mr-1">/</small><strong>30°</strong>
+					<c:set var="loop_flag" value="false" />
+					<c:forEach items="${WEATHER}" var="list">
+						<c:if test="${not loop_flag }">
+							<c:if test="${list.category eq 'TMP'}">
+								<strong>현재기온: ${list.fcstValue}℃</strong>
+								<c:set var="loop_flag" value="true" />
+							</c:if>
+						</c:if>
+					</c:forEach>
+
+					<c:set var="loop_flag" value="false" />
+					<c:forEach items="${WEATHER}" var="sky">
+						<c:if test="${not loop_flag }">
+							<c:if test="${sky.category eq 'SKY'}">
+								<c:if test="${sky.fcstValue eq '1'}">
+								맑음
+               <img class="weather_img"
+										src="${rootPath}/static/img/Sunny.png"> &nbsp&nbsp
+                  </c:if>
+
+								<c:if test="${sky.fcstValue eq '3'}">
+               구름 많음
+               <img class="weather_img"
+										src="${rootPath}/static/img/Cloud.png"> &nbsp&nbsp
+                  </c:if>
+
+								<c:if test="${sky.fcstValue eq '4'}">
+               흐림
+               <img class="weather_img"
+										src="${rootPath}/static/img/Cloudy.png"> &nbsp&nbsp
+                  </c:if>
+								<c:set var="loop_flag" value="true" />
+							</c:if>
+						</c:if>
+					</c:forEach>
 				</div>
+
 				<div class="col-6 text-right">
+					<c:set var="loop_flag" value="false" />
+					<c:forEach items="${WEATHER}" var="reh">
+						<c:if test="${not loop_flag }">
+							<c:if test="${reh.category eq 'REH'}">
+								<strong>습도: ${reh.fcstValue}%</strong>
+								<c:set var="loop_flag" value="true" />
+							</c:if>
+						</c:if>
+					</c:forEach>
+				</div>
+
+
+				<!-- <div class="col-6 text-right">
 					<strong>일출 6시 1분</strong><small class="text-grey ml-3 mr-3">|</small><strong>일몰
 						19시 7분</strong>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="space mt-3"></div>
@@ -148,9 +201,6 @@
 			<!--// 상세정보 -->
 
 
-
-
-
 			<!-- Visual Carousel -->
 			<div id="carousel-visual" class="carousel slide mt-3"
 				data-ride="carousel">
@@ -162,26 +212,19 @@
 				<div class="carousel-inner">
 					<div class="carousel-item active">
 						<img src="${COMMONDETAIL.firstimage}" class="d-block w-100" alt=""
-							onerror="this.src='${rootPath}/static/img/default-img.jpg'">
+							onerror="this.src='${rootPath}/static/img/profile/no_img.jpg'">
 					</div>
 					<!-- 엑박처리 할 것 -->
 					<div class="carousel-item">
 						<img src="${COMMONDETAIL.firstimage}" class="d-block w-100" alt=""
-							onerror="this.src='${rootPath}/static/img/default-img.jpg'">
+							onerror="this.src='${rootPath}/static/img/profile/no_img.jpg'">
 					</div>
 					<!-- 엑박처리 할 것 -->
 					<div class="carousel-item">
 						<img src="${COMMONDETAIL.firstimage}" class="d-block w-100" alt=""
-							onerror="this.src='${rootPath}/static/img/default-img.jpg'">
+							onerror="this.src='${rootPath}/static/img/profile/no_img.jpg'">
 					</div>
 					<!-- 엑박처리 할 것 -->
-
-					<%-- <div class="carousel-item">
-						<img src="${COMMONDETAIL.firstimage2}" class="d-block w-100" alt="">
-					</div>
-					<div class="carousel-item">
-						<img src="${rootPath}/static/img/sample/photo3.jpg" class="d-block w-100" alt="">
-					</div> --%>
 				</div>
 			</div>
 			<!--// Visual Carousel -->
@@ -265,17 +308,17 @@
 				<h5>주변관광</h5>
 				<div class="row">
 
-					<c:forEach items="${AROUND}" begin="1" end="5" var="AROUND">
+					<c:forEach items="${AROUND}" begin="1" end="5" var="VO">
 						<div class="col-12 mt-2"
-							OnClick="location.href ='${rootPath}/detail/detail/${AROUND.contentid}'">
-							<div class="imgWrap" data-isbn="${AROUND.contentid}">
+							OnClick="location.href ='${rootPath}/detail/detail/${VO.contentid}'">
+							<div class="imgWrap" data-isbn="${VO.contentid}">
 								<span class="play-live"> <small class="sr-only">LIVE</small>
-								</span> <img src="${AROUND.firstimage}" class="img-fluid" alt=""
-									onerror="this.src='${rootPath}/static/img/default-img.jpg'">
+								</span> <img src="${VO.firstimage}" class="img-fluid" alt=""
+									onerror="this.src='${rootPath}/static/img/profile/no_img.jpg'">
 								<!-- 엑박처리 할 것 -->
 								<div class="InfoWrap">
-									<h4>${AROUND.title}</h4>
-									<p>${AROUND.addr1}</p>
+									<h4>${VO.title}</h4>
+									<p>${VO.addr1}</p>
 								</div>
 							</div>
 						</div>
@@ -298,7 +341,7 @@
 							<div class="imgWrap" data-isbn="${AROUND.contentid}">
 								<span class="play-live"> <small class="sr-only">LIVE</small>
 								</span> <img src="${AROUND.firstimage}" class="img-fluid" alt=""
-									onerror="this.src='${rootPath}/static/img/default-img.jpg'">
+									onerror="this.src='${rootPath}/static/img/profile/no_img.jpg'">
 								<!-- 엑박처리 할 것 -->
 								<div class="InfoWrap">
 									<h4>${AROUND.title}</h4>
@@ -326,7 +369,7 @@
 							<div class="imgWrap" data-isbn="${AROUND.contentid}">
 								<span class="play-live"> <small class="sr-only">LIVE</small>
 								</span> <img src="${AROUND.firstimage}" class="img-fluid" alt=""
-									onerror="this.src='${rootPath}/static/img/default-img.jpg'">
+									onerror="this.src='${rootPath}/static/img/profile/no_img.jpg'">
 								<!-- 엑박처리 할 것 -->
 								<div class="InfoWrap">
 									<h4>${AROUND.title}</h4>
@@ -508,7 +551,7 @@
 						<h4>공유하기</h4>
 						<p class="clearfix"></p>
 						<ul class="sns">
-							<li><a href="#none">
+							<li><a id="kakaotalk-sharing-btn">
 									<figure>
 										<img src="${rootPath}/static/img/svg/sns_kakaotalk.svg"
 											alt="카카오톡" />
@@ -656,5 +699,54 @@
 			}
 		});
 	</script>
+
+		<!-- <script src="https://developers.kakao.com/sdk/js/kakao.js"></script> -->
+		<!-- 	<script type="text/javascript">
+		Kakao.init("f03c88bcd77572e88d422c4306a16404");
+		
+		Kakao.Share.createDefaultButton({
+					container : "#kakaotalk-sharing-btn",
+					objectType : "list",
+					headerTitle : 'FOOD',
+					headerLink : {
+						mobileWebUrl : '',
+						webUrl : '',
+					},
+					contents : [
+							{
+								title : '${COMMONDETAIL.title}', 
+								description : '${COMMONDETAIL.addr1}',
+								imageUrl:
+							        '${COMMONDETAIL.firstimage2}',
+								link : {
+									mobileWebUrl: '${COMMONDETAIL.homepage}',
+							        webUrl: '${COMMONDETAIL.homepage}',
+								},
+							},
+							
+							 {
+							      title: '${AROUND[0].title}',
+							      description: '${AROUND[0].addr1}',
+							      imageUrl:
+							        'http://k.kakaocdn.net/dn/bDPMIb/btqgeoTRQvd/49BuF1gNo6UXkdbKecx600/kakaolink40_original.png',
+							      link: {
+							        mobileWebUrl: 'https://developers.kakao.com',
+							        webUrl: 'https://developers.kakao.com',
+							      },
+							    },
+					],
+					buttons: [
+					    {
+					        title: '날씨 보기',
+					        link: {
+					          mobileWebUrl: 'https://search.naver.com/search.naver?sm=top_hty&fbm=0&ie=utf8&query=%EA%B4%91%EC%A3%BC%20%EB%82%A0%EC%94%A8',
+					          webUrl: 'https://search.naver.com/search.naver?sm=top_hty&fbm=0&ie=utf8&query=%EA%B4%91%EC%A3%BC%20%EB%82%A0%EC%94%A8',
+					        },
+					      },
+					    ],
+					  }); 
+					 
+		
+	</script> -->
 </body>
 </html>

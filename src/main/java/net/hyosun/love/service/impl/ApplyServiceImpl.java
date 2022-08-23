@@ -3,6 +3,7 @@ package net.hyosun.love.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -49,7 +50,7 @@ public class ApplyServiceImpl implements ApplyService{
 		return 0;
 	}
 
-	@Override
+	@Bean
 	public void create_apply_table() {
 		applyDao.create_apply_table();
 	}

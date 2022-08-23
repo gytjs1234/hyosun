@@ -14,10 +14,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class AroundVO {
-
-
 	public String dist;
-
 	public String addr1;
 	public String addr2;
 	public String areacode;

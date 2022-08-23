@@ -14,7 +14,6 @@ import lombok.ToString;
 @ToString
 @Builder
 public class CommonDetailVO {
-	
 	public String contentid;
 	public String contenttypeid;
 	public String booktour;
@@ -34,11 +33,8 @@ public class CommonDetailVO {
 	public String addr1;
 	public String addr2;
 	public String zipcode;
-	public String mapx;
-	public String mapy;
+	private String mapx;
+	private String mapy;
 	public String mlevel;
 	public String overview;
-
-
-
 }
